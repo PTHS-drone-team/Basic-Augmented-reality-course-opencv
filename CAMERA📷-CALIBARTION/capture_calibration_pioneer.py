@@ -6,13 +6,13 @@ import numpy as np
 CHESS_BOARD_DIM = (9, 6)
 
 # The size of Square in the checker board.
-SQUARE_SIZE = 14  # millimeters
+SQUARE_SIZE = 24  # millimeters
 
 # termination criteria
 criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 
-calib_data_path = "../calib_data_asus"
+calib_data_path = "../calib_data_pioneer"
 CHECK_DIR = os.path.isdir(calib_data_path)
 
 

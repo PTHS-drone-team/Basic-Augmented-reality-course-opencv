@@ -1,5 +1,7 @@
 import cv2 as cv
 import os
+from pioneer_sdk import Camera, Pioneer
+import numpy as np
 
 CHESS_BOARD_DIM = (9, 6)
 
@@ -27,29 +29,33 @@ def detect_checker_board(image, grayImage, criteria, boardDimension):
 
     return image, ret
 
+pioneer_mini = Pioneer()
+camera = Camera()
 
 cap = cv.VideoCapture(0)
 
 while True:
-    _, frame = cap.read()
-    copyFrame = frame.copy()
-    gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    frame_copter = camera.get_frame()
+    if frame_copter is not None:
+        frame = cv.imdecode(np.frombuffer(frame_copter, dtype=np.uint8), cv.IMREAD_COLOR)
+        copyFrame = frame.copy()
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
 
-    image, board_detected = detect_checker_board(frame, gray, criteria, CHESS_BOARD_DIM)
-    # print(ret)
-    cv.putText(
-        frame,
-        f"saved_img : {n}",
-        (30, 40),
-        cv.FONT_HERSHEY_PLAIN,
-        1.4,
-        (0, 255, 0),
-        2,
-        cv.LINE_AA,
-    )
+        image, board_detected = detect_checker_board(frame, gray, criteria, CHESS_BOARD_DIM)
+        # print(ret)
+        cv.putText(
+            frame,
+            f"saved_img : {n}",
+            (30, 40),
+            cv.FONT_HERSHEY_PLAIN,
+            1.4,
+            (0, 255, 0),
+            2,
+            cv.LINE_AA,
+        )
 
-    cv.imshow("frame", frame)
-    cv.imshow("copyFrame", copyFrame)
+        cv.imshow("frame", frame)
+        cv.imshow("copyFrame", copyFrame)
 
     key = cv.waitKey(1)
 

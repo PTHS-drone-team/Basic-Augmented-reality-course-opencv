@@ -4,6 +4,7 @@ import numpy as np
 from pioneer_sdk import Camera, Pioneer
 import time
 
+
 calib_data_path = "../calib_data_pioneer/MultiMatrix.npz"
 
 calib_data = np.load(calib_data_path)
@@ -72,7 +73,7 @@ while True:
                 # print(distance)
                 # print(ids, "  ", corners)
                 if round(distance, 2) > 70.0:
-                    ch_3 = 1411100
+                    ch_3 = 1400
                 else:
                     ch_3 = 1600
 

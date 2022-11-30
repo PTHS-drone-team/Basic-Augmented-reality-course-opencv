@@ -23,7 +23,7 @@ param_markers = aruco.DetectorParameters_create()
 
 camera = Camera()
 pioneer_mini = Pioneer()
-cap = cv.VideoCapture(0)
+# cap = cv.VideoCapture(0)
 
 while True:
     ch_1, ch_2, ch_3, ch_4, ch_5 = 1500, 1500, 1500, 1500, 2000
@@ -73,9 +73,9 @@ while True:
                 # print(distance)
                 # print(ids, "  ", corners)
                 if round(distance, 2) > 70.0:
-                    ch_3 = 1400
+                    ch_3 = 1450
                 else:
-                    ch_3 = 1600
+                    ch_3 = 1550
 
         if len(marker_corners) > 0:
             center = (int((marker_corners[0][0][0][0] + marker_corners[0][0][2][0]) / 2),
@@ -108,6 +108,9 @@ while True:
         pioneer_mini.arm()
         time.sleep(1)
         pioneer_mini.takeoff()
+        pioneer_mini.go_to_local_point(0, 0, 1.5, 0)
+        while not pioneer_mini.point_reached():
+            pass
         time.sleep(2)
     elif key == ord('4'):
         pioneer_mini.land()
